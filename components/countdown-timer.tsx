@@ -16,12 +16,17 @@ interface TimeLeft {
 }
 
 export function CountdownTimer({ targetDate, className }: CountdownTimerProps) {
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
-    
+
     const calculateTimeLeft = () => {
       const difference = +new Date(targetDate) - +new Date();
       let newTimeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
@@ -73,8 +78,8 @@ export function CountdownTimer({ targetDate, className }: CountdownTimerProps) {
         <div key={index} className="flex flex-col items-center">
           <div className="w-16 h-16 md:w-20 md:h-20 bg-white/70 backdrop-blur-sm rounded-xl flex items-center justify-center border border-accent/20 shadow-sm relative overflow-hidden group hover:border-accent/40 transition-colors">
             {/* Soft background glow */}
-            <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-50" />
-            
+            <div className="absolute inset-0 bg-linear-to-br from-accent/5 to-transparent opacity-50" />
+
             <span className="text-2xl md:text-3xl font-heading text-primary z-10 tabular-nums">
               {String(unit.value).padStart(2, "0")}
             </span>

@@ -12,7 +12,11 @@ interface WelcomeScreenProps {
   guestName?: string;
 }
 
-export function WelcomeScreen({ isOpen, onOpen, guestName = "Tamu Undangan" }: WelcomeScreenProps) {
+export function WelcomeScreen({
+  isOpen,
+  onOpen,
+  guestName = "Tamu Undangan",
+}: WelcomeScreenProps) {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -20,7 +24,7 @@ export function WelcomeScreen({ isOpen, onOpen, guestName = "Tamu Undangan" }: W
           initial={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: "-100%" }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-background overflow-hidden"
+          className="fixed inset-0 z-60 flex flex-col items-center justify-center bg-background overflow-hidden"
         >
           {/* Decorative Corners */}
           <FloralCorner position="top-left" />
@@ -44,7 +48,9 @@ export function WelcomeScreen({ isOpen, onOpen, guestName = "Tamu Undangan" }: W
               transition={{ delay: 0.4, duration: 1 }}
               className="font-heading text-5xl md:text-7xl text-primary mb-8 leading-tight tracking-tight"
             >
-              {weddingData.bride.nickname} <span className="text-accent italic font-normal">&amp;</span> {weddingData.groom.nickname}
+              {weddingData.bride.nickname}{" "}
+              <span className="text-accent italic font-normal">&amp;</span>{" "}
+              {weddingData.groom.nickname}
             </motion.h1>
 
             <motion.div
@@ -54,7 +60,7 @@ export function WelcomeScreen({ isOpen, onOpen, guestName = "Tamu Undangan" }: W
               className="mb-10 w-full"
             >
               <p className="text-muted-foreground text-sm mb-2">Kepada Yth.</p>
-              <p className="text-xl font-heading text-primary font-medium border-b border-accent/30 pb-2 mx-auto inline-block min-w-[200px]">
+              <p className="text-xl font-heading text-primary font-medium border-b border-accent/30 pb-2 mx-auto inline-block min-w-50">
                 {guestName}
               </p>
               <p className="text-xs text-muted-foreground mt-3 px-4">
@@ -74,9 +80,9 @@ export function WelcomeScreen({ isOpen, onOpen, guestName = "Tamu Undangan" }: W
               <span className="relative">Buka Undangan</span>
             </motion.button>
           </div>
-          
+
           {/* Subtle background overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background/80 pointer-events-none" />
+          <div className="absolute inset-0 bg-linear-to-b from-transparent via-background/50 to-background/80 pointer-events-none" />
         </motion.div>
       )}
     </AnimatePresence>
