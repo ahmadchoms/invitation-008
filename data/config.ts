@@ -1,15 +1,19 @@
 export const weddingData = {
+  heroImage:
+    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=2069",
   bride: {
     nickname: "Juliet",
     fullName: "Juliet Capulet",
     parents: "Putri dari Bpk. Capulet & Ibu Lady Capulet",
     instagram: "@juliet",
+    image: "bride.jpg",
   },
   groom: {
     nickname: "Romeo",
     fullName: "Romeo Montague",
     parents: "Putra dari Bpk. Montague & Ibu Lady Montague",
     instagram: "@romeo",
+    image: "groom.jpg",
   },
   date: "2026-12-25T08:00:00+07:00", // Target date for countdown
   dateDisplay: "Minggu, 25 Desember 2026",
@@ -18,6 +22,8 @@ export const weddingData = {
       title: "Akad Nikah",
       date: "Minggu, 25 Desember 2026",
       time: "08:00 - 10:00 WIB",
+      startDateTime: "2026-12-25T01:00:00Z", // UTC standard
+      endDateTime: "2026-12-25T03:00:00Z",
       venue: "Masjid Agung Verona",
       address: "Jl. Cinta Abadi No. 1, Verona",
       mapUrl:
@@ -28,6 +34,8 @@ export const weddingData = {
       title: "Resepsi Pernikahan",
       date: "Minggu, 25 Desember 2026",
       time: "11:00 - Selesai",
+      startDateTime: "2026-12-25T04:00:00Z",
+      endDateTime: "2026-12-25T07:00:00Z",
       venue: "Grand Verona Ballroom",
       address: "Jl. Cinta Abadi No. 99, Verona",
       mapUrl:
@@ -54,10 +62,14 @@ export const weddingData = {
       recipient: "Juliet Capulet",
     },
   ],
+  qris: {
+    imageUrl:
+      "https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg", // Placeholder
+    label: "Scan QRIS atas nama Romeo Montague",
+  },
   audio: "audio.mp3",
   contact: {
     whatsapp: "6281234567890",
-    defaultMessage:
-      "Halo, saya mengkonfirmasi akan hadir di acara pernikahan Romeo & Juliet.",
+    defaultMessage: `Konfirmasi Kehadiran\nNama: ___\nKehadiran: Hadir / Tidak Hadir\nJumlah Tamu: ___\n\nPernikahan Romeo & Juliet`,
   },
 };

@@ -49,7 +49,7 @@ export function WelcomeScreen({
               className="font-heading text-5xl md:text-7xl text-primary mb-8 leading-tight tracking-tight"
             >
               {weddingData.bride.nickname}{" "}
-              <span className="text-accent italic font-normal">&amp;</span>{" "}
+              <span className="text-accent font-script italic font-normal text-4xl leading-[0] mx-1">&amp;</span>{" "}
               {weddingData.groom.nickname}
             </motion.h1>
 

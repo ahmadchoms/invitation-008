@@ -84,7 +84,7 @@ export function CountdownTimer({ targetDate, className }: CountdownTimerProps) {
               {String(unit.value).padStart(2, "0")}
             </span>
           </div>
-          <span className="text-xs md:text-sm text-secondary-foreground/70 mt-3 uppercase tracking-widest font-sans font-medium">
+          <span className="text-xs md:text-sm text-secondary/70 mt-3 uppercase tracking-widest font-sans font-medium">
             {unit.label}
           </span>
         </div>

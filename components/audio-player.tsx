@@ -25,6 +25,7 @@ export const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>(
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
+    const [autoplayFailed, setAutoplayFailed] = useState(false);
 
     useImperativeHandle(ref, () => ({
       play: () => {
@@ -34,10 +35,13 @@ export const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>(
             .then(() => {
               setIsPlaying(true);
               setIsVisible(true);
+              setAutoplayFailed(false);
             })
             .catch((err) => {
-              console.error("Audio playback failed:", err);
+              console.error("Audio playback failed, likely blocked by browser:", err);
               setIsPlaying(false);
+              setAutoplayFailed(true);
+              setIsVisible(true); // Ensure button is visible so user can click it
             });
         }
       },
@@ -67,6 +71,7 @@ export const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>(
             .play()
             .then(() => {
               setIsPlaying(true);
+              setAutoplayFailed(false); // Clear the warning once successfully played
             })
             .catch((err) => console.error(err));
         }
@@ -74,7 +79,10 @@ export const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>(
     };
 
     return (
-      <>
+      <div className={cn(
+        "fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 transition-all duration-500",
+        isVisible ? "translate-y-0 opacity-100" : "translate-y-[150%] opacity-0"
+      )}>
         <audio
           ref={audioRef}
           src={src}
@@ -83,15 +91,21 @@ export const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>(
           {...(autoPlay ? { autoPlay: true } : {})}
         />
 
+        {/* Fallback Tooltip for Mobile Autoplay Block */}
+        {autoplayFailed && !isPlaying && (
+          <div className="bg-white text-primary text-xs font-medium px-3 py-1.5 rounded-full shadow-lg border border-accent/20 animate-bounce relative right-2 mb-1">
+            Tap to play music
+            <div className="absolute -bottom-1 right-4 w-2 h-2 bg-white border-b border-r border-accent/20 rotate-45" />
+          </div>
+        )}
+
         <button
           onClick={togglePlay}
           className={cn(
-            "fixed bottom-6 right-6 z-50 flex items-center justify-center w-12 h-12 rounded-full",
+            "flex items-center justify-center w-12 h-12 rounded-full relative group",
             "bg-primary text-primary-foreground shadow-lg border-2 border-primary-foreground/20",
             "transition-all duration-500 hover:scale-110",
-            isVisible
-              ? "translate-y-0 opacity-100"
-              : "translate-y-10 opacity-0",
+            autoplayFailed && !isPlaying ? "animate-pulse ring-4 ring-accent/50" : ""
           )}
           aria-label={isPlaying ? "Pause music" : "Play music"}
         >
@@ -106,7 +120,7 @@ export const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>(
             <span className="absolute inset-0 rounded-full animate-ping bg-primary opacity-20 -z-10" />
           )}
         </button>
-      </>
+      </div>
     );
   },
 );

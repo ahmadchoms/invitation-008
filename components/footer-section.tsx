@@ -32,7 +32,7 @@ export function FooterSection() {
         </p>
 
         <h2 className="font-heading text-4xl md:text-5xl mb-16 text-white drop-shadow-md">
-          {weddingData.bride.nickname} &amp; {weddingData.groom.nickname}
+          {weddingData.bride.nickname} <span className="font-script text-accent mx-2 text-5xl">&amp;</span> {weddingData.groom.nickname}
         </h2>
 
         {/* Branding Watermark */}

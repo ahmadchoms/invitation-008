@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { weddingData } from "@/data/config";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,11 +12,27 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import { GalleryLightbox } from "./gallery-lightbox";
+import { ZoomIn } from "lucide-react";
 
 export function GallerySection() {
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true })
   );
+  
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const openLightbox = (index: number) => {
+    setSelectedIndex(index);
+    setLightboxOpen(true);
+    plugin.current.stop(); // Pause carousel when lightbox is open
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+    plugin.current.reset(); // Resume carousel after closing
+  };
 
   return (
     <section className="py-24 px-6 md:py-32 bg-muted/40 relative overflow-hidden">
@@ -47,16 +63,24 @@ export function GallerySection() {
               {weddingData.gallery.map((imgSrc, index) => (
                 <CarouselItem key={index} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3">
                   <div className="p-1">
-                    <Card className="overflow-hidden border-none shadow-md hover:shadow-xl transition-shadow duration-500 rounded-2xl bg-white/50">
-                      <CardContent className="flex aspect-[4/5] items-center justify-center p-0 relative group">
+                    <Card 
+                      className="overflow-hidden border-none shadow-md hover:shadow-xl transition-all duration-500 rounded-2xl bg-white/50 cursor-pointer group"
+                      onClick={() => openLightbox(index)}
+                    >
+                      <CardContent className="flex aspect-[4/5] items-center justify-center p-0 relative">
                         <div className="absolute inset-0 bg-secondary/10 animate-pulse" /> {/* Placeholder loading state */}
                         <img 
                           src={imgSrc} 
                           alt={`Gallery photo ${index + 1}`} 
-                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                           loading="lazy"
                         />
-                        <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                        {/* Interactive overlay */}
+                        <div className="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                          <div className="bg-white/20 backdrop-blur-sm p-3 rounded-full text-white transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                            <ZoomIn className="w-6 h-6" />
+                          </div>
+                        </div>
                       </CardContent>
                     </Card>
                   </div>
@@ -72,6 +96,13 @@ export function GallerySection() {
           </Carousel>
         </div>
       </motion.div>
+
+      <GalleryLightbox 
+        isOpen={lightboxOpen} 
+        onClose={closeLightbox} 
+        currentIndex={selectedIndex} 
+        onNavigate={setSelectedIndex} 
+      />
     </section>
   );
 }
